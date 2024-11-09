@@ -1,12 +1,18 @@
 import React from 'react';
 import NavBar from '../components/NavBar';
+import NotificationsSection from '../components/NotificationsSection';
+import HomeSection from '../components/HomeSection';
+
 
 const HomePage = () => {
+    
+
     return (
         <div>
             <NavBar />
-            <h1>Bem-vindo à Home Page</h1>
-            <p>Hello World!</p>
+            <br />
+            <HomeSection />
+            <NotificationsSection />
         </div>
     );
 };
