@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 export default function HomeSection() {
     return (
         <div>
-            <NavLink to="/turma">
+            <NavLink to="/turmas">
                 <button>Turmas</button>
             </NavLink>
             <NavLink>

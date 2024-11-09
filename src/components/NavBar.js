@@ -10,8 +10,8 @@ export default function NavBar() {
             <NavLink to="/disciplinas">
                 <button>Disciplinas</button>
             </NavLink>
-            <NavLink to="/turma">
-                <button>Turma</button>
+            <NavLink to="/turmas">
+                <button>Turmas</button>
             </NavLink>
             <NavLink>
                 <button to="/usuarios">Usuários</button>
