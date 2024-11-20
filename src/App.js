@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import CoursesPage from './pages/CoursesPage';
 import ClassesPage from './pages/ClassesPage';
 import UsersPage from './pages/UsersPage';
+import NotificationsPage from './pages/NotificationsPage';
 
 const App = () => {
     return (
@@ -13,6 +14,7 @@ const App = () => {
                 <Route path="/disciplinas" element={<CoursesPage />} />
                 <Route path="/turmas" element={<ClassesPage />} />
                 <Route path="/usuarios" element={<UsersPage />} />
+                <Route path="/notificacoes" element={<NotificationsPage />} />
                 <Route path="*" element={<h1>Página não encontrada</h1>} />
             </Routes>
         </Router>
