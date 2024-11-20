@@ -13,11 +13,11 @@ export default function NavBar() {
             <NavLink to="/turmas">
                 <button>Turmas</button>
             </NavLink>
-            <NavLink>
-                <button to="/usuarios">Usuários</button>
+            <NavLink to="/usuarios">
+                <button>Usuários</button>
             </NavLink>
-            <NavLink>
-                <button to="/notificacoes">Notificações</button>
+            <NavLink to="/notificacoes">
+                <button>Notificações</button>
             </NavLink>
         </nav>
     )
