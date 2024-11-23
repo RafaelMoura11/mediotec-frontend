@@ -17,16 +17,17 @@ import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import { useNavigate } from "react-router-dom";
 import loginFunctions from "../utils/loginFunctions";
+import { useAppContext } from "../context/AppContext";
 
 const LoginSection = () => {
-  const [userType, setUserType] = useState("Coordenador");
+  const [userType, setUserType] = useState("COORDINATOR");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const { setUser } = useAppContext();
   const navigate = useNavigate();
 
   const handleTogglePasswordVisibility = () => {
@@ -36,7 +37,8 @@ const LoginSection = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await loginFunctions.login({ email, password });
+      const user = await loginFunctions.login({ email, password });
+      setUser({ token: user.data.token, role: user.data.role, userName: user.data.userName });
       navigate("/");
     } catch (error) {
       setErrorMessage(error.response?.data?.message || "Erro desconhecido.");
@@ -89,9 +91,9 @@ const LoginSection = () => {
               },
             }}
           >
-            <MenuItem value="Coordenador">Coordenador</MenuItem>
-            <MenuItem value="Professor">Professor</MenuItem>
-            <MenuItem value="Aluno">Aluno</MenuItem>
+            <MenuItem value="STUDENT">Aluno</MenuItem>
+            <MenuItem value="TEACHER">Professor</MenuItem>
+            <MenuItem value="COORDINATOR">Coordenador</MenuItem>
           </Select>
         </Box>
         {/* Email */}

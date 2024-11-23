@@ -1,6 +1,17 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { useAppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 export default function HomeSection() {
+    const navigate = useNavigate();
+    const { user } = useAppContext();
+
+    useEffect(() => {
+        if (!user.token) {
+            return navigate("/login");
+        }
+    }, [navigate, user])
     return (
         <div>
             <NavLink to="/turmas">
