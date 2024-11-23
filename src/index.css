@@ -1,3 +1,9 @@
+/*
+Todas as estilizações do site estão neste arquivo. 
+Basta buscar o elemento desejado usando "crt + F".
+*/
+
+/*-------------------- ESTILIZAÇÕES GERAIS --------------------*/
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,3 +17,121 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  padding: 20px 40px;
+  width: 70vw;
+}
+
+/*                        PAGES                       */
+
+/*-------------------- Login Page --------------------*/
+
+
+/*-------------------- Home Page --------------------*/
+
+
+/*-------------------- Classes Page --------------------*/
+
+
+/*-------------------- Courses Page --------------------*/
+
+
+/*-------------------- Notifications Page --------------------*/
+
+
+/*-------------------- Users Page --------------------*/
+
+
+
+
+/*                   COMPONENTS                   */
+
+/*-------------------- Navbar --------------------*/
+.navbar {
+  background-color: #7326bf !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  padding: 10px 20px;
+}
+
+.navbar-container-fluid {
+  width: 100%;
+}
+
+.navbar .nav-link {
+  color: #ffffff;
+  font-weight: normal;
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #64d0ea;
+  font-weight: bold;
+}
+
+.navbar .nav-link.active-link {
+  color: #e33bd0 !important;
+  font-weight: bold;
+}
+
+.navbar-collapse {
+  justify-content: center;
+}
+
+.navbar-nav {
+  margin: 0 auto;
+}
+
+.navbar-brand {
+  margin-right: auto;
+  gap: 20px;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 10px;
+  flex-direction: row;
+}
+
+.navbar-user img {
+  border-radius: 50%;
+  border: 2px solid white;
+  height: 40px;
+  width: auto;
+}
+
+.tipo-usuario {
+  color: #ffffff;
+}
+
+/*-------------------- Modals --------------------*/
+
+
+
+
+/*-------------------- Buttons --------------------*/
+
+
+
