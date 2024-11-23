@@ -6,6 +6,7 @@ import ClassesPage from './pages/ClassesPage';
 import UsersPage from './pages/UsersPage';
 import NotificationsPage from './pages/NotificationsPage';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 const App = () => {
     return (
@@ -13,6 +14,7 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/registro" element={<RegisterPage />} />
                 <Route path="/disciplinas" element={<CoursesPage />} />
                 <Route path="/turmas" element={<ClassesPage />} />
                 <Route path="/usuarios" element={<UsersPage />} />
