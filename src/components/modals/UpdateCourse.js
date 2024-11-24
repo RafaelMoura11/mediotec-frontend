@@ -6,7 +6,7 @@ import classesFunctions from "../../utils/classesFunctions";
 import coursesFunctions from "../../utils/coursesFunctions";
 import relationshipFunctions from "../../utils/relationshipFunctions";
 
-const NewCourse = ({ open, handleClose }) => {
+const UpdateCourse = ({ open, handleClose, courseToUpdate }) => {
   const { user } = useAppContext();
   const [formData, setFormData] = useState({
     courseName: "",
@@ -19,8 +19,6 @@ const NewCourse = ({ open, handleClose }) => {
   const [teachers, setTeachers] = useState([]);
   const [classes, setClasses] = useState([]);
 
-  
-
   useEffect(() => {
     const getAllTeachersAndClasses = async () => {
       try {
@@ -29,11 +27,22 @@ const NewCourse = ({ open, handleClose }) => {
         setTeachers(allTeachers);
         setClasses(allClasses);
       } catch (e) {
-        console.log("Something went wrong.")
+        console.log("Something went wrong.");
       }
     };
     getAllTeachersAndClasses();
-  }, [user.token])
+
+    if (courseToUpdate) {
+    console.log(courseToUpdate)
+      setFormData({
+        courseName: courseToUpdate.courseName,
+        workload: courseToUpdate.workload,
+        teacher: courseToUpdate.teacher || "",
+        class: courseToUpdate.class || "",
+        description: courseToUpdate.description,
+      });
+    }
+  }, [user.token, courseToUpdate]);
 
   const clearForm = () => {
     return setFormData({
@@ -42,8 +51,8 @@ const NewCourse = ({ open, handleClose }) => {
       teacher: "",
       class: "",
       description: "",
-    })
-  }
+    });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,20 +60,26 @@ const NewCourse = ({ open, handleClose }) => {
   };
 
   const handleSave = async () => {
-    const { data: { course: { courseId } } } = await coursesFunctions.createNewCourse({
-      courseName: formData.courseName,
-      description: formData.description,
-      workload: Number(formData.workload)
-    });
-    if (formData.teacher && formData.class) {
-      await relationshipFunctions.createRelationship({
-        courseId,
-        userId: formData.teacher,
-        classId: formData.class
+    try {
+      await coursesFunctions.updateCourse(courseToUpdate.id, {
+        courseName: formData.courseName,
+        description: formData.description,
+        workload: Number(formData.workload),
       });
+
+      if (formData.teacher && formData.class) {
+        await relationshipFunctions.createRelationship({
+          courseId: courseToUpdate.id,
+          userId: formData.teacher,
+          classId: formData.class,
+        });
+      }
+
+      clearForm();
+      handleClose();
+    } catch (error) {
+      console.error("Erro ao atualizar curso:", error);
     }
-    clearForm();
-    handleClose();
   };
 
   return (
@@ -83,7 +98,7 @@ const NewCourse = ({ open, handleClose }) => {
         }}
       >
         <Typography variant="h6" sx={{ mb: 2, bgcolor: "purple", color: "white", p: 1, borderRadius: 1 }}>
-          Nova Disciplina
+          Atualizar Disciplina
         </Typography>
         <TextField
           label="Nome da disciplina"
@@ -102,9 +117,9 @@ const NewCourse = ({ open, handleClose }) => {
           value={formData.workload}
           onChange={handleChange}
         >
-            <MenuItem value="40">40h</MenuItem>
-            <MenuItem value="60">60h</MenuItem>
-            <MenuItem value="80">80h</MenuItem>
+          <MenuItem value="40">40h</MenuItem>
+          <MenuItem value="60">60h</MenuItem>
+          <MenuItem value="80">80h</MenuItem>
         </TextField>
         <TextField
           label="Professor"
@@ -115,9 +130,11 @@ const NewCourse = ({ open, handleClose }) => {
           value={formData.teacher}
           onChange={handleChange}
         >
-            {
-              teachers.map((teacher) => <MenuItem value={ teacher.userId }>{ teacher.userName }</MenuItem>)
-            }
+          {teachers.map((teacher) => (
+            <MenuItem key={teacher.userId} value={teacher.userId}>
+              {teacher.userName}
+            </MenuItem>
+          ))}
         </TextField>
         <TextField
           label="Turma"
@@ -128,9 +145,11 @@ const NewCourse = ({ open, handleClose }) => {
           value={formData.class}
           onChange={handleChange}
         >
-          {
-            classes.map((c) => <MenuItem value={ c.classId }>{ c.className }</MenuItem>)
-          }
+          {classes.map((c) => (
+            <MenuItem key={c.classId} value={c.classId}>
+              {c.className}
+            </MenuItem>
+          ))}
         </TextField>
         <TextField
           label="Ementa"
@@ -144,13 +163,13 @@ const NewCourse = ({ open, handleClose }) => {
         />
         <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, mt: 2 }}>
           <Button variant="outlined" color="secondary" onClick={() => {
-            clearForm()
-            handleClose()
-            }}>
+            clearForm();
+            handleClose();
+          }}>
             Cancelar
           </Button>
           <Button variant="contained" color="success" onClick={handleSave}>
-            Salvar
+            Atualizar
           </Button>
         </Box>
       </Box>
@@ -158,4 +177,4 @@ const NewCourse = ({ open, handleClose }) => {
   );
 };
 
-export default NewCourse;
+export default UpdateCourse;
