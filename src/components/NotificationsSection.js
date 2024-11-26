@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import notificationsFunctions from '../utils/notificationsFunctions';
+import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../context/AppContext";
 
 export default function NotificationsSection() {
     const [notifications, setNotifications] = useState([]);
+    const navigate = useNavigate();
+    const { user } = useAppContext();
 
     const getAllNotifications = async () => {
         const { data } = await notificationsFunctions.getAllNotifications();
@@ -10,8 +14,11 @@ export default function NotificationsSection() {
       };
     
       useEffect(() => {
+        if (!user.token) {
+            return navigate("/login");
+        }
         getAllNotifications();
-      }, []);
+      }, [navigate, user]);
     return (
         <div>
             <h3>Comunicados recentes</h3>

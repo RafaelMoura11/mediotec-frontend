@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../context/AppContext";
 import coursesFunctions from "../utils/coursesFunctions";
 import NewCourse from "./modals/NewCourse";
-import UpdateCourse from "./modals/UpdateCourse"; // Importando o novo modal
+import UpdateCourse from "./modals/UpdateCourse";
 
 export default function CoursesSection() {
   const [courses, setCourses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [courseToUpdate, setCourseToUpdate] = useState(null); // Estado para armazenar o curso a ser atualizado
+  const [courseToUpdate, setCourseToUpdate] = useState(null);
+  const navigate = useNavigate();
+  const { user } = useAppContext();
 
   const getAllCourses = async () => {
     const { data } = await coursesFunctions.getAllCourses();
@@ -15,8 +19,8 @@ export default function CoursesSection() {
   };
 
   const handleUpdate = (course) => {
-    setCourseToUpdate(course); // Define o curso que será atualizado
-    setIsUpdateModalOpen(true); // Abre o modal de atualização
+    setCourseToUpdate(course);
+    setIsUpdateModalOpen(true);
   };
 
   const handleDelete = async (courseId) => {
@@ -29,8 +33,11 @@ export default function CoursesSection() {
   };
 
   useEffect(() => {
+    if (!user.token) {
+      return navigate("/login");
+    }
     getAllCourses();
-  }, []);
+  }, [navigate, user]);
 
   const handleModalOpen = () => {
     setIsModalOpen(true);

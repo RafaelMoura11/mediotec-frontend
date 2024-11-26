@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import usersFunctions from '../utils/usersFunctions';
+import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../context/AppContext";
 
 export default function UsersSection() {
     const [users, setUsers] = useState([]);
+    const navigate = useNavigate();
+    const { user } = useAppContext();
 
     const getAllUsers = async () => {
         try {
@@ -14,8 +18,11 @@ export default function UsersSection() {
       };
     
       useEffect(() => {
+        if (!user.token) {
+            return navigate("/login");
+        }
         getAllUsers();
-      }, []);
+      }, [navigate, user]);
     return (
         <div>
             <h3>Lista de Usuários</h3>
