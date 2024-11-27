@@ -47,12 +47,43 @@ const deleteRelationship = async (id) => {
     }
 };
 
+const getRelationshipsGroupedByUser = async () => {
+    try {
+        const response = await api.get(`${BASE_URL}/users`);
+        return response.data;
+    } catch (e) {
+        console.error("Erro ao obter relacionamentos agrupados por usuário:", e);
+    }
+};
+
+const getRelationshipsGroupedByCourse = async () => {
+    try {
+        console.log(`${BASE_URL}/courses`);
+        const response = await api.get(`${BASE_URL}/courses`);
+        return response.data;
+    } catch (e) {
+        console.error("Erro ao obter relacionamentos agrupados por curso:", e);
+    }
+};
+
+const getRelationshipsGroupedByClass = async () => {
+    try {
+        const response = await api.get(`${BASE_URL}/classes`);
+        return response.data;
+    } catch (e) {
+        console.error("Erro ao obter relacionamentos agrupados por turma:", e);
+    }
+};
+
 const relationshipFunctions = {
     createRelationship,
     getAllRelationships,
     getRelationshipById,
     updateRelationship,
     deleteRelationship,
+    getRelationshipsGroupedByUser,
+    getRelationshipsGroupedByCourse,
+    getRelationshipsGroupedByClass,
 };
 
 export default relationshipFunctions;
