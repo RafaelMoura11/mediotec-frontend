@@ -1,44 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Box, TextField, Button, MenuItem, Typography } from "@mui/material";
-import usersFunctions from "../../utils/usersFunctions";
 import { useAppContext } from '../../context/AppContext';
-import classesFunctions from "../../utils/classesFunctions";
 import coursesFunctions from "../../utils/coursesFunctions";
-import relationshipFunctions from "../../utils/relationshipFunctions";
 
 const UpdateCourse = ({ open, handleClose, courseToUpdate }) => {
   const { user } = useAppContext();
   const [formData, setFormData] = useState({
     courseName: "",
     workload: "",
-    teacher: "",
-    class: "",
     description: "",
   });
 
-  const [teachers, setTeachers] = useState([]);
-  const [classes, setClasses] = useState([]);
 
   useEffect(() => {
-    const getAllTeachersAndClasses = async () => {
-      try {
-        const allTeachers = await usersFunctions.getAllTeachers(user.token);
-        const { data: allClasses} =  await classesFunctions.getAllClasses(user.token);
-        setTeachers(allTeachers);
-        setClasses(allClasses);
-      } catch (e) {
-        console.log("Something went wrong.");
-      }
-    };
-    getAllTeachersAndClasses();
-
     if (courseToUpdate) {
-    console.log(courseToUpdate)
       setFormData({
         courseName: courseToUpdate.courseName,
         workload: courseToUpdate.workload,
-        teacher: courseToUpdate.teacher || "",
-        class: courseToUpdate.class || "",
         description: courseToUpdate.description,
       });
     }
@@ -48,8 +26,6 @@ const UpdateCourse = ({ open, handleClose, courseToUpdate }) => {
     return setFormData({
       courseName: "",
       workload: "",
-      teacher: "",
-      class: "",
       description: "",
     });
   };
@@ -66,14 +42,6 @@ const UpdateCourse = ({ open, handleClose, courseToUpdate }) => {
         description: formData.description,
         workload: Number(formData.workload),
       });
-
-      if (formData.teacher && formData.class) {
-        await relationshipFunctions.createRelationship({
-          courseId: courseToUpdate.id,
-          userId: formData.teacher,
-          classId: formData.class,
-        });
-      }
 
       clearForm();
       handleClose();
@@ -120,36 +88,6 @@ const UpdateCourse = ({ open, handleClose, courseToUpdate }) => {
           <MenuItem value="40">40h</MenuItem>
           <MenuItem value="60">60h</MenuItem>
           <MenuItem value="80">80h</MenuItem>
-        </TextField>
-        <TextField
-          label="Professor"
-          name="teacher"
-          select
-          fullWidth
-          margin="normal"
-          value={formData.teacher}
-          onChange={handleChange}
-        >
-          {teachers.map((teacher) => (
-            <MenuItem key={teacher.userId} value={teacher.userId}>
-              {teacher.userName}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          label="Turma"
-          name="class"
-          select
-          fullWidth
-          margin="normal"
-          value={formData.class}
-          onChange={handleChange}
-        >
-          {classes.map((c) => (
-            <MenuItem key={c.classId} value={c.classId}>
-              {c.className}
-            </MenuItem>
-          ))}
         </TextField>
         <TextField
           label="Ementa"
