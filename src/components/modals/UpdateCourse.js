@@ -3,7 +3,7 @@ import { Modal, Box, TextField, Button, MenuItem, Typography } from "@mui/materi
 import { useAppContext } from '../../context/AppContext';
 import coursesFunctions from "../../utils/coursesFunctions";
 
-const UpdateCourse = ({ open, handleClose, courseToUpdate }) => {
+const UpdateCourse = ({ open, handleClose, courseToUpdate, getAllCourses }) => {
   const { user } = useAppContext();
   const [formData, setFormData] = useState({
     courseName: "",
@@ -37,12 +37,12 @@ const UpdateCourse = ({ open, handleClose, courseToUpdate }) => {
 
   const handleSave = async () => {
     try {
-      await coursesFunctions.updateCourse(courseToUpdate.id, {
+      await coursesFunctions.updateCourse(courseToUpdate.courseId, {
         courseName: formData.courseName,
         description: formData.description,
         workload: Number(formData.workload),
       });
-
+      await getAllCourses();
       clearForm();
       handleClose();
     } catch (error) {

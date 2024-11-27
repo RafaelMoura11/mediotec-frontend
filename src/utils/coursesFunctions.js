@@ -33,7 +33,7 @@ const deleteCourse = async (courseId) => {
 
 const updateCourse = async (courseId, updatedCourseData) => {
     try {
-        const response = await api.put(`${BASE_URL}/${courseId}`, updatedCourseData);
+        const response = await api.put(`${BASE_URL}/courseupdate/${courseId}`, updatedCourseData);
         return response;
     } catch (e) {
         console.log("Something went wrong while updating.");

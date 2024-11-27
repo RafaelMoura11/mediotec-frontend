@@ -25,8 +25,9 @@ export default function CoursesSection() {
 
   const handleDelete = async (courseId) => {
     try {
+      console.log(courseId);
       await coursesFunctions.deleteCourse(courseId);
-      setCourses(courses.filter(course => course.id !== courseId));
+      await getAllCourses();
     } catch (error) {
       console.error("Erro ao deletar curso:", error);
     }
@@ -63,14 +64,14 @@ export default function CoursesSection() {
             <p>{course.workload}</p>
             <div>
               <button onClick={() => handleUpdate(course)}>Atualizar</button>
-              <button onClick={() => handleDelete(course.id)}>Deletar</button>
+              <button onClick={() => handleDelete(course.courseId)}>Deletar</button>
             </div>
           </li>
         ))}
       </ul>
 
-      <NewCourse open={isModalOpen} handleClose={handleModalClose} />
-      <UpdateCourse open={isUpdateModalOpen} handleClose={handleUpdateModalClose} courseToUpdate={courseToUpdate} />
+      <NewCourse open={isModalOpen} handleClose={handleModalClose} getAllCourses={getAllCourses} />
+      <UpdateCourse open={isUpdateModalOpen} handleClose={handleUpdateModalClose} courseToUpdate={courseToUpdate} getAllCourses={getAllCourses} />
     </div>
   );
 }

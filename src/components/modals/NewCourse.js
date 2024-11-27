@@ -3,7 +3,7 @@ import { Modal, Box, TextField, Button, MenuItem, Typography } from "@mui/materi
 import { useAppContext } from '../../context/AppContext';
 import coursesFunctions from "../../utils/coursesFunctions";
 
-const NewCourse = ({ open, handleClose }) => {
+const NewCourse = ({ open, handleClose, getAllCourses }) => {
   const { user } = useAppContext();
   const [formData, setFormData] = useState({
     courseName: "",
@@ -35,6 +35,7 @@ const NewCourse = ({ open, handleClose }) => {
       description: formData.description,
       workload: Number(formData.workload)
     });
+    await getAllCourses();
     clearForm();
     handleClose();
   };
