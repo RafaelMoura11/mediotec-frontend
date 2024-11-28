@@ -1,41 +1,67 @@
-import React, { useEffect, useState } from 'react';
-import usersFunctions from '../utils/usersFunctions';
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
+import usersFunctions from "../utils/usersFunctions";
+import UpdateUser from "./modals/UpdateUser";
 
 export default function UsersSection() {
-    const [users, setUsers] = useState([]);
-    const navigate = useNavigate();
-    const { user } = useAppContext();
+  const [users, setUsers] = useState([]);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [userToUpdate, setUserToUpdate] = useState(null);
+  const navigate = useNavigate();
+  const { user } = useAppContext();
 
-    const getAllUsers = async () => {
-        try {
-            const { data } = await usersFunctions.getAllUsers();
-            setUsers(data);
-        } catch (e) {
-            console.log("Erro");
-        }
-      };
-    
-      useEffect(() => {
-        if (!user.token) {
-            return navigate("/login");
-        }
-        getAllUsers();
-      }, [navigate, user]);
-    return (
-        <div>
-            <h3>Lista de Usuários</h3>
-            <ul>
-                {
-                    users.map((user) => (
-                        <li>
-                            <h5>{user.userName}</h5>
-                            <p>{user.email}</p>
-                        </li>
-                    ))
-                }
-            </ul>
-        </div>
-    )
+  const getAllUsers = async () => {
+    const data = await usersFunctions.getAllUsers(user.token);
+    setUsers(data);
+  };
+
+  const handleUpdate = (user) => {
+    setUserToUpdate(user);
+    setIsUpdateModalOpen(true);
+  };
+
+  const handleDelete = async (userId) => {
+    try {
+      console.log(userId);
+      await usersFunctions.deleteUserById(userId, user.token);
+      await getAllUsers();
+    } catch (error) {
+      console.error("Erro ao deletar usuário:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (!user.token) {
+      return navigate("/login");
+    }
+    getAllUsers();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate, user]);
+
+
+  const handleUpdateModalClose = () => {
+    setIsUpdateModalOpen(false);
+    setUserToUpdate(null);
+  };
+
+  return (
+    <div>
+      <h3>Gerenciamento de Usuários</h3>
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>
+            <h5>{user.name}</h5>
+            <p>{user.email}</p>
+            <div>
+              <button onClick={() => handleUpdate(user)}>Atualizar</button>
+              <button onClick={() => handleDelete(user.userId)}>Deletar</button>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <UpdateUser open={isUpdateModalOpen} handleClose={handleUpdateModalClose} userToUpdate={userToUpdate} getAllUsers={getAllUsers} />
+    </div>
+  );
 }
