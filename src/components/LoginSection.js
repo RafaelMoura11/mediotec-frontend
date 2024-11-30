@@ -58,7 +58,7 @@ const LoginSection = () => {
         alignItems: "center",
         justifyContent: "center",
         height: "100vh",
-        bgcolor: "purple",
+        bgcolor: "#9747ff",
         padding: 2,
       }}
     >
@@ -68,26 +68,27 @@ const LoginSection = () => {
         sx={{
           width: "100%",
           maxWidth: "400px",
-          bgcolor: "white",
+          bgcolor: "#9747ff",
           borderRadius: "12px",
           p: 4,
-          boxShadow: 3,
           textAlign: "center",
         }}
       >
-        <Typography variant="h4" sx={{ mb: 4, color: "purple", fontWeight: "bold" }}>
+        <Typography variant="h4" sx={{ mb: 4, color: "white", fontWeight: "bold" }}>
           Login
         </Typography>
+
         {/* Tipo de Usuário */}
         <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-          <PersonIcon sx={{ mr: 2, color: "gray" }} />
+          <PersonIcon sx={{ mr: 2, color: "white" }} />
           <Select
             value={userType}
             onChange={(e) => setUserType(e.target.value)}
             fullWidth
             sx={{
               "& .MuiSelect-select": {
-                padding: "10px",
+                padding: "10px", 
+                bgcolor: 'white'
               },
             }}
           >
@@ -96,26 +97,29 @@ const LoginSection = () => {
             <MenuItem value="COORDINATOR">Coordenador</MenuItem>
           </Select>
         </Box>
+
         {/* Email */}
         <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-          <EmailIcon sx={{ mr: 2, color: "gray" }} />
+          <EmailIcon sx={{ mr: 2, color: "white" }} />
           <TextField
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             fullWidth
+            sx={{ bgcolor: 'white', borderRadius: 1 }}
           />
         </Box>
         {/* Senha */}
         <Box sx={{ display: "flex", alignItems: "center", mb: 4 }}>
-          <LockIcon sx={{ mr: 2, color: "gray" }} />
+          <LockIcon sx={{ mr: 2, color: "white" }} />
           <TextField
             placeholder="Senha"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type={showPassword ? "text" : "password"}
             fullWidth
+            sx={{ bgcolor: 'white', borderRadius: 1 }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -127,6 +131,7 @@ const LoginSection = () => {
             }}
           />
         </Box>
+
         {/* Botão de Login */}
         <Button
           type="submit"
@@ -134,12 +139,12 @@ const LoginSection = () => {
           sx={{
             width: "100%",
             padding: "10px",
-            bgcolor: "purple",
-            color: "white",
+            bgcolor: "#FFFFFF",
+            color: "#9747FF",
             fontWeight: "bold",
-            borderRadius: "20px",
+            borderRadius: "5px",
             "&:hover": {
-              bgcolor: "darkviolet",
+              bgcolor: "#EFE2FF",
             },
           }}
         >
