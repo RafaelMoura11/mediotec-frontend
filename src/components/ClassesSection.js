@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import classesFunctions from "../utils/classesFunctions";
 import NewClass from "./modals/NewClass";
-import UpdateClass from "./modals/UpdateClass";
+// import UpdateClass from "./modals/UpdateClass";
 
 export default function ClassesSection() {
   const [classes, setClasses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [classToUpdate, setClassToUpdate] = useState(null);
+//   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+//   const [classToUpdate, setClassToUpdate] = useState(null);
   const navigate = useNavigate();
   const { user } = useAppContext();
 
@@ -18,10 +18,10 @@ export default function ClassesSection() {
     setClasses(data);
   };
 
-  const handleUpdate = (classItem) => {
-    setClassToUpdate(classItem);
-    setIsUpdateModalOpen(true);
-  };
+//   const handleUpdate = (classItem) => {
+//     setClassToUpdate(classItem);
+//     setIsUpdateModalOpen(true);
+//   };
 
   const handleDelete = async (classId) => {
     try {
@@ -47,10 +47,10 @@ export default function ClassesSection() {
     setIsModalOpen(false);
   };
 
-  const handleUpdateModalClose = () => {
-    setIsUpdateModalOpen(false);
-    setClassToUpdate(null);
-  };
+//   const handleUpdateModalClose = () => {
+//     setIsUpdateModalOpen(false);
+//     setClassToUpdate(null);
+//   };
 
   return (
     <div>
@@ -62,7 +62,7 @@ export default function ClassesSection() {
             <h5>{classItem.className}</h5>
             <p>{classItem.year}</p>
             <div>
-              <button onClick={() => handleUpdate(classItem)}>Atualizar</button>
+              {/* <button onClick={() => handleUpdate(classItem)}>Atualizar</button> */}
               <button onClick={() => handleDelete(classItem.classId)}>Deletar</button>
             </div>
           </li>
@@ -70,7 +70,7 @@ export default function ClassesSection() {
       </ul>
 
       <NewClass open={isModalOpen} handleClose={handleModalClose} getAllClasses={getAllClasses} />
-      <UpdateClass open={isUpdateModalOpen} handleClose={handleUpdateModalClose} classToUpdate={classToUpdate} getAllClasses={getAllClasses} />
+      {/* <UpdateClass open={isUpdateModalOpen} handleClose={handleUpdateModalClose} classToUpdate={classToUpdate} getAllClasses={getAllClasses} /> */}
     </div>
   );
 }
