@@ -33,6 +33,14 @@ code {
   border: 1px solid #ddd;
   padding: 20px 40px;
   width: 70vw;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 /*                        PAGES                       */
@@ -78,6 +86,8 @@ code {
 /*-------------------- Notifications Page --------------------*/
 
 /*-------------------- Users Page --------------------*/
+
+
 
 /*                   COMPONENTS                   */
 
@@ -177,14 +187,14 @@ code {
 
 @media (max-width: 768px) {
   .quadrados {
-    grid-template-columns: 1fr; /* Apenas uma coluna em telas menores */
+    grid-template-columns: 1fr;
   }
 }
 
 /*-------------------- CalendarSection --------------------*/
 
 .container-calendario {
-  flex: 1; /* Faz o calendário ocupar o espaço restante */
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -198,27 +208,136 @@ code {
 
 @media (max-width: 768px) {
   .container-calendario {
-    margin-top: 20px; /* Espaçamento extra para separar o calendário */
+    margin-top: 20px;
   }
 }
 
-/*-------------------- Courses Page --------------------*/
-.courses-section {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-}
+/*-------------------- CoursesSection --------------------*/
 
-.title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
+/* .btn-report {
+  background-color: #d3d3d3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: not-allowed;
+  border-radius: 4px;
+} */
 
-.action-buttons {
+.search-filters {
   display: flex;
+  justify-content: center;
   gap: 10px;
   margin-bottom: 20px;
 }
+
+.search-input,
+.filter-select {
+  padding: 10px;
+  font-size: 16px;
+  width: 200px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.courses-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.course-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid #9747FF;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.course-info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.course-info {
+  display: flex;
+  flex-direction: row;
+}
+
+.course-checkbox {
+  margin-right: 30px;
+}
+
+.course-details {
+  text-align: left;
+}
+
+.course-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.course-workload {
+  font-size: 14px;
+  color: #555;
+}
+
+.btn-edit {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  justify-content: flex-end; /* Alinha o botão à direita */
+}
+
+/*-------------------- ClassesSection --------------------*/
+.classes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Card */
+.class-card {
+  background-color: white;
+  border: 1px solid #9747FF;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.class-card-header {
+  margin-bottom: 10px;
+}
+
+.class-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.class-year {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Rodapé do cartão */
+.class-card-footer {
+  display: flex;
+  justify-content: space-between;
+  background-color: #9747FF;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+/*-------------------- Modals --------------------*/
+
+/*-------------------- Buttons --------------------*/
 
 .btn-add {
   background-color: #28a745;
@@ -245,85 +364,16 @@ code {
   justify-content: center;
   width: 50px;
   padding-left: 6px;
-
-;
 }
 
 .btn-delete:hover {
   background-color: #b02a37;
 }
 
-.btn-report {
-  background-color: #d3d3d3;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: not-allowed;
-  border-radius: 4px;
-}
-
-.search-filters {
+.action-buttons {
   display: flex;
-  justify-content: center;
   gap: 10px;
   margin-bottom: 20px;
-}
-
-.search-input,
-.filter-select {
-  padding: 10px;
-  font-size: 16px;
-  width: 200px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-.courses-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.course-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid #d3d3d3;
-  border-radius: 4px;
-  padding: 10px;
-  margin: 10px 0;
-}
-
-.course-info {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.course-checkbox {
-  margin-right: 10px;
-}
-
-.course-details {
-  text-align: left;
-}
-
-.course-name {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.course-workload {
-  font-size: 14px;
-  color: #555;
-}
-
-.btn-edit {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
 }
 
 .pagination {
@@ -348,8 +398,3 @@ code {
   font-size: 16px;
   font-weight: bold;
 }
-
-
-/*-------------------- Modals --------------------*/
-
-/*-------------------- Buttons --------------------*/

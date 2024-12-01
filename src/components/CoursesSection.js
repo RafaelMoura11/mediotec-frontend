@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import coursesFunctions from "../utils/coursesFunctions";
 import NewCourse from "./modals/NewCourse";
 import UpdateCourse from "./modals/UpdateCourse";
@@ -55,8 +55,9 @@ export default function CoursesSection() {
   };
 
   return (
-    <div className="courses-section">
+    <div>
       <h3 className="title">Gerenciamento de Disciplinas</h3>
+
       <div className="action-buttons">
         <button className="btn-add" onClick={handleModalOpen}>
           Adicionar
@@ -64,7 +65,6 @@ export default function CoursesSection() {
         <button className="btn-delete">
           <FaTrashAlt size={16} style={{ marginRight: 8 }} />
         </button>
-
       </div>
 
       {/* <button className="btn-report" disabled>
@@ -75,26 +75,27 @@ export default function CoursesSection() {
         <input type="text" placeholder="Procurar" className="search-input" />
         <select className="filter-select">
           <option value="">Filtro</option>
-          <option value="portugues">Português</option>
-          <option value="matematica">Matemática</option>
+          {/* Adicionar funcionalidade */}
         </select>
       </div>
+
       <ul className="courses-list">
         {courses.map((course) => (
           <li className="course-item" key={course.id}>
-            <div className="course-info">
-              <input type="checkbox" className="course-checkbox" />
-              <div className="course-details">
-                <h5 className="course-name">{course.courseName} | Turma 1A24</h5>
-                <p className="course-workload">Carga Horária: {course.workload}</p>
+            <div className="course-info-container">
+              <div className="course-info">
+                <input type="checkbox" className="course-checkbox" />
+                <div className="course-details">
+                  <h5 className="course-name">{course.courseName} | Turma 1A24</h5>
+                  <p className="course-workload">Carga Horária: {course.workload}</p>
+                </div>
               </div>
+
               <button
                 className="btn-edit"
                 onClick={() => handleUpdate(course)}
               >
-                <span role="img" aria-label="editar">
-                  ✏️
-                </span>
+                <FaEdit size={16} style={{ marginRight: 8 }} />
               </button>
             </div>
           </li>
@@ -105,7 +106,6 @@ export default function CoursesSection() {
         <span className="pagination-page">1</span>
         <button className="pagination-btn">Próximo →</button>
       </div>
-
       <NewCourse
         open={isModalOpen}
         handleClose={handleModalClose}
