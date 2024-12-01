@@ -128,6 +128,32 @@ const deleteUserById = async (userId, token) => {
     }
 };
 
+const getDisciplinesByStudentId = async (studentId, token) => {
+    try {
+        const response = await api.get(`/mediotec/usuarios/student/${studentId}/courses`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (e) {
+        console.error("Erro ao buscar disciplinas:", e.message);
+    }
+};
+
+const getConceptsByCourseAndStudent = async (studentId, courseId, token) => {
+    try {
+        const response = await api.get(`/mediotec/usuarios/student/${studentId}/course/${courseId}/concepts`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (e) {
+        console.error("Erro ao buscar conceitos:", e.message);
+    }
+};
+
 const usersFunctions = {
     getAllUsers,
     getAllTeachers,
@@ -138,6 +164,8 @@ const usersFunctions = {
     getAllUsersOfCourse,
     updateUserById,
     deleteUserById,
+    getDisciplinesByStudentId,
+    getConceptsByCourseAndStudent
 };
 
 export default usersFunctions;

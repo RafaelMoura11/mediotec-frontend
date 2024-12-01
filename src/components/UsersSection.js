@@ -31,14 +31,17 @@ export default function UsersSection() {
     }
   };
 
+  const handleNavigateToConcepts = (studentId) => {
+    navigate(`/conceitos/${studentId}`);
+  };
+
   useEffect(() => {
     if (!user.token) {
       return navigate("/login");
     }
     getAllUsers();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate, user]);
-
 
   const handleUpdateModalClose = () => {
     setIsUpdateModalOpen(false);
@@ -50,18 +53,28 @@ export default function UsersSection() {
       <h3>Gerenciamento de Usuários</h3>
       <ul>
         {users.map((user) => (
-          <li key={user.id}>
-            <h5>{user.name}</h5>
+          <li key={user.userId}>
+            <h5>{user.userName}</h5>
             <p>{user.email}</p>
             <div>
               <button onClick={() => handleUpdate(user)}>Atualizar</button>
               <button onClick={() => handleDelete(user.userId)}>Deletar</button>
+              {user.role === "STUDENT" && (
+                <button onClick={() => handleNavigateToConcepts(user.userId)}>
+                  Adicionar Conceitos
+                </button>
+              )}
             </div>
           </li>
         ))}
       </ul>
 
-      <UpdateUser open={isUpdateModalOpen} handleClose={handleUpdateModalClose} userToUpdate={userToUpdate} getAllUsers={getAllUsers} />
+      <UpdateUser
+        open={isUpdateModalOpen}
+        handleClose={handleUpdateModalClose}
+        userToUpdate={userToUpdate}
+        getAllUsers={getAllUsers}
+      />
     </div>
   );
 }
