@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
+import { FaTrashAlt } from "react-icons/fa";
 import coursesFunctions from "../utils/coursesFunctions";
 import NewCourse from "./modals/NewCourse";
 import UpdateCourse from "./modals/UpdateCourse";
@@ -54,24 +55,68 @@ export default function CoursesSection() {
   };
 
   return (
-    <div>
-      <h3>Gerenciamento de Disciplinas</h3>
-      <button onClick={handleModalOpen}>Adicionar</button>
-      <ul>
+    <div className="courses-section">
+      <h3 className="title">Gerenciamento de Disciplinas</h3>
+      <div className="action-buttons">
+        <button className="btn-add" onClick={handleModalOpen}>
+          Adicionar
+        </button>
+        <button className="btn-delete">
+          <FaTrashAlt size={16} style={{ marginRight: 8 }} />
+        </button>
+
+      </div>
+
+      {/* <button className="btn-report" disabled>
+        Relatório
+      </button> */}
+
+      <div className="search-filters">
+        <input type="text" placeholder="Procurar" className="search-input" />
+        <select className="filter-select">
+          <option value="">Filtro</option>
+          <option value="portugues">Português</option>
+          <option value="matematica">Matemática</option>
+        </select>
+      </div>
+      <ul className="courses-list">
         {courses.map((course) => (
-          <li key={course.id}>
-            <h5>{course.courseName}</h5>
-            <p>{course.workload}</p>
-            <div>
-              <button onClick={() => handleUpdate(course)}>Atualizar</button>
-              <button onClick={() => handleDelete(course.courseId)}>Deletar</button>
+          <li className="course-item" key={course.id}>
+            <div className="course-info">
+              <input type="checkbox" className="course-checkbox" />
+              <div className="course-details">
+                <h5 className="course-name">{course.courseName} | Turma 1A24</h5>
+                <p className="course-workload">Carga Horária: {course.workload}</p>
+              </div>
+              <button
+                className="btn-edit"
+                onClick={() => handleUpdate(course)}
+              >
+                <span role="img" aria-label="editar">
+                  ✏️
+                </span>
+              </button>
             </div>
           </li>
         ))}
       </ul>
+      <div className="pagination">
+        <button className="pagination-btn">← Anterior</button>
+        <span className="pagination-page">1</span>
+        <button className="pagination-btn">Próximo →</button>
+      </div>
 
-      <NewCourse open={isModalOpen} handleClose={handleModalClose} getAllCourses={getAllCourses} />
-      <UpdateCourse open={isUpdateModalOpen} handleClose={handleUpdateModalClose} courseToUpdate={courseToUpdate} getAllCourses={getAllCourses} />
+      <NewCourse
+        open={isModalOpen}
+        handleClose={handleModalClose}
+        getAllCourses={getAllCourses}
+      />
+      <UpdateCourse
+        open={isUpdateModalOpen}
+        handleClose={handleUpdateModalClose}
+        courseToUpdate={courseToUpdate}
+        getAllCourses={getAllCourses}
+      />
     </div>
   );
 }
