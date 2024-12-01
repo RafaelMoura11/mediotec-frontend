@@ -62,6 +62,8 @@ export default function ConceptsSection() {
         handleClose={handleModalClose}
         selectedDiscipline={selectedDiscipline}
         concepts={concepts}
+        token={user.token}
+        fetchConcepts={fetchConcepts}
       />
     </div>
   );

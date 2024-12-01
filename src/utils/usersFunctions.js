@@ -154,6 +154,19 @@ const getConceptsByCourseAndStudent = async (studentId, courseId, token) => {
     }
 };
 
+const updateConcept = async (conceitoId, updatedData, token) => {
+    try {
+        const response = await api.put(`/mediotec/usuarios/concepts/${conceitoId}`, updatedData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (e) {
+        console.error("Erro ao atualizar conceito:", e.message);
+    }
+};
+
 const usersFunctions = {
     getAllUsers,
     getAllTeachers,
@@ -165,7 +178,8 @@ const usersFunctions = {
     updateUserById,
     deleteUserById,
     getDisciplinesByStudentId,
-    getConceptsByCourseAndStudent
+    getConceptsByCourseAndStudent,
+    updateConcept
 };
 
 export default usersFunctions;
