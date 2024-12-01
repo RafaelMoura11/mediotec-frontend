@@ -59,6 +59,18 @@ code {
 
 /*-------------------- Home Page --------------------*/
 
+.icones-calendario{
+  display: flex;
+  flex-wrap: wrap; /* Permite quebrar linhas em telas menores */
+  justify-content: space-between;
+  gap: 20px; /* Espaçamento entre os elementos */
+}
+
+@media (max-width: 768px) {
+  .icones-calendario {
+    flex-direction: column; /* Empilha os elementos em telas menores */
+  }}
+
 /*-------------------- Classes Page --------------------*/
 
 /*-------------------- Courses Page --------------------*/
@@ -134,6 +146,60 @@ code {
 
 .tipo-usuario {
   color: #ffffff;
+}
+
+/*-------------------- HomeSection --------------------*/
+.quadrados {
+  gap: 50px;
+  display: grid;
+  grid-template-columns: repeat(2, 100%);
+  flex: 1;
+  padding: 20px;
+}
+
+.background-roxo {
+  background-color: #7326BF;
+  border-radius: 6vh 1vh 1vh 1vh;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  margin-bottom: 15px;
+  padding: 15px;
+  height: 40%;
+}
+
+.icon{
+  height: 80px;
+  margin: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+@media (max-width: 768px) {
+  .quadrados {
+    grid-template-columns: 1fr; /* Apenas uma coluna em telas menores */
+  }
+}
+
+/*-------------------- CalendarSection --------------------*/
+
+.container-calendario {
+  flex: 1; /* Faz o calendário ocupar o espaço restante */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendario-img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .container-calendario {
+    margin-top: 20px; /* Espaçamento extra para separar o calendário */
+  }
 }
 
 /*-------------------- Modals --------------------*/

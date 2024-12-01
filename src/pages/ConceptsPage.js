@@ -4,13 +4,15 @@ import ConceptsSection from '../components/ConceptsSection';
 
 
 const ConceptsPage = () => {
-    
+
 
     return (
         <div>
             <NavBar />
             <br />
-            <ConceptsSection />
+            <div className='container'>
+                <ConceptsSection />
+            </div>
         </div>
     );
 };

@@ -5,7 +5,10 @@ export default function CoursesPage() {
     return (
         <div>
             <NavBar />
-            <CoursesSection />
+            <br />
+            <div className='container'>
+                <CoursesSection />
+            </div>
         </div>
     )
 }
