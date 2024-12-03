@@ -58,25 +58,23 @@ export default function CoursesSection() {
     <div>
       <h3 className="title">Gerenciamento de Disciplinas</h3>
 
-      <div className="action-buttons">
-        <button className="btn-add" onClick={handleModalOpen}>
-          Adicionar
-        </button>
-        <button className="btn-delete">
-          <FaTrashAlt size={16} style={{ marginRight: 8 }} />
-        </button>
-      </div>
-
-      {/* <button className="btn-report" disabled>
-        Relatório
-      </button> */}
-
       <div className="search-filters">
-        <input type="text" placeholder="Procurar" className="search-input" />
-        <select className="filter-select">
-          <option value="">Filtro</option>
-          {/* Adicionar funcionalidade */}
-        </select>
+        <div>
+          <input type="text" placeholder="Procurar" className="search-input" />
+          <select className="filter-select">
+            <option value="">Filtro</option>
+            {/* Adicionar funcionalidade */}
+          </select>
+        </div>
+
+        <div className="action-buttons">
+          <button className="btn-add" onClick={handleModalOpen}>
+            Adicionar
+          </button>
+          <button className="btn-delete">
+            <FaTrashAlt size={16} style={{ marginRight: 8 }} />
+          </button>
+        </div>
       </div>
 
       <ul className="courses-list">
@@ -102,9 +100,9 @@ export default function CoursesSection() {
         ))}
       </ul>
       <div className="pagination">
-        <button className="pagination-btn">← Anterior</button>
+        <button className="pagination-btn">←</button>
         <span className="pagination-page">1</span>
-        <button className="pagination-btn">Próximo →</button>
+        <button className="pagination-btn">→</button>
       </div>
       <NewCourse
         open={isModalOpen}

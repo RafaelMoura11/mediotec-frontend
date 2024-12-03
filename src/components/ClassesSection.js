@@ -57,13 +57,18 @@ export default function ClassesSection() {
     <div>
       <h1 className="title">Gerenciamento de Turmas</h1>
 
-      <div className="action-buttons">
-        <div className="search-filters">
+
+
+      <div className="search-filters">
+        <div>
           <input type="text" placeholder="Procurar" className="search-input" />
           <select className="filter-select">
             <option value="">Filtro</option>
             {/* Adicionar funcionalidade */}
           </select>
+        </div>
+
+        <div className="action-buttons">
           <button className="btn-add" onClick={handleModalOpen}>
             Adicionar
           </button>
@@ -79,13 +84,13 @@ export default function ClassesSection() {
             </div>
             <div className="class-card-footer">
               <button
-                className="btn-edit"
+                className="btn-edit-classes"
                 onClick={() => console.log("Editar turma", classItem.classId)}
               >
                 <FaEdit />
               </button>
               <button
-                className="btn-delete"
+                className="btn-delete-classes"
                 onClick={() => handleDelete(classItem.classId)}
               >
                 <FaTrashAlt />
@@ -96,9 +101,9 @@ export default function ClassesSection() {
       </div>
 
       <div className="pagination">
-        <button className="pagination-btn">← Anterior</button>
+        <button className="pagination-btn">←</button>
         <span className="pagination-page">1</span>
-        <button className="pagination-btn">Próximo →</button>
+        <button className="pagination-btn">→</button>
       </div>
 
       <NewClass
