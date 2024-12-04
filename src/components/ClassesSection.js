@@ -57,8 +57,6 @@ export default function ClassesSection() {
     <div>
       <h1 className="title">Gerenciamento de Turmas</h1>
 
-
-
       <div className="search-filters">
         <div>
           <input type="text" placeholder="Procurar" className="search-input" />

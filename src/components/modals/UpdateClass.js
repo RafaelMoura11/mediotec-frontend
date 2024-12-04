@@ -52,33 +52,39 @@ const UpdateClass = ({ open, handleClose, classToUpdate, getAllClasses }) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           bgcolor: "white",
-          p: 4,
+          p: 0,
           borderRadius: 2,
           boxShadow: 24,
-          width: "400px",
+          width: { xs: "90%", sm: "500px" }, // 90% em telas pequenas
+          maxHeight: "90vh",
+          overflowY: "auto",
         }}
       >
-        <Typography variant="h6" sx={{ mb: 2, bgcolor: "purple", color: "white", p: 1, borderRadius: 1 }}>
+        <Typography variant="h6" sx={{ mb: 2, bgcolor: "#7326BF", color: "white", p: 3 }}>
           Atualizar Turma
         </Typography>
-        <TextField
-          label="Nome da Turma"
-          name="className"
-          fullWidth
-          margin="normal"
-          value={formData.className}
-          onChange={handleChange}
-        />
-        <TextField
-          label="Ano"
-          name="year"
-          type="number"
-          fullWidth
-          margin="normal"
-          value={formData.year}
-          onChange={handleChange}
-        />
-        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, mt: 2 }}>
+
+        <div className="imput-modal">
+          <TextField
+            label="Nome da Turma"
+            name="className"
+            fullWidth
+            margin="normal"
+            value={formData.className}
+            onChange={handleChange}
+          />
+          <TextField
+            label="Ano"
+            name="year"
+            type="number"
+            fullWidth
+            margin="normal"
+            value={formData.year}
+            onChange={handleChange}
+          />
+        </div>
+
+        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, p: 2 }}>
           <Button variant="outlined" color="secondary" onClick={() => {
             clearForm();
             handleClose();
