@@ -135,8 +135,9 @@ export default function UsersSection() {
 
                   <div className="user-details">
                     <div className="user-contact">
-                      <p className="user-email">{user.email}</p>
-                      <p className="user-phone">{user.phone}</p>
+                      <p className="user-detail-contact">{user.role}</p>
+                      <p className="user-detail-contact">{user.email}</p>
+                      <p className="user-detail-contact">{user.phone}</p>
                     </div>
 
                     <button

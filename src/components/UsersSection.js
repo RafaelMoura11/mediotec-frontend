@@ -9,12 +9,16 @@ export default function UsersSection() {
   const [users, setUsers] = useState([]);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [userToUpdate, setUserToUpdate] = useState(null);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
   const navigate = useNavigate();
   const { user } = useAppContext();
 
   const getAllUsers = async () => {
     const data = await usersFunctions.getAllUsers(user.token);
     setUsers(data);
+    setSelectedUsers([]);
+    setSelectAll(false);
   };
 
   const handleUpdate = (user) => {
@@ -22,14 +26,32 @@ export default function UsersSection() {
     setIsUpdateModalOpen(true);
   };
 
-  const handleDelete = async (userId) => {
+  const handleDelete = async (userIds) => {
     try {
-      console.log(userId);
-      await usersFunctions.deleteUserById(userId, user.token);
+      for (const userId of userIds) {
+        await usersFunctions.deleteUserById(userId, user.token);
+      }
       await getAllUsers();
     } catch (error) {
       console.error("Erro ao deletar usuário:", error);
     }
+  };
+
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedUsers([]);
+    } else {
+      setSelectedUsers(users.map((user) => user.userId));
+    }
+    setSelectAll(!selectAll);
+  };
+
+  const handleSelectUser = (userId) => {
+    setSelectedUsers((prevSelected) =>
+      prevSelected.includes(userId)
+        ? prevSelected.filter((id) => id !== userId)
+        : [...prevSelected, userId]
+    );
   };
 
   const handleNavigateToConcepts = (studentId) => {
@@ -53,7 +75,6 @@ export default function UsersSection() {
     <div>
       <h3 className="title">Gerenciamento de Usuários</h3>
 
-
       <div className="search-filters">
         <div>
           <input type="text" placeholder="Procurar" className="search-input" />
@@ -73,46 +94,72 @@ export default function UsersSection() {
 
         <div className="action-buttons">
           <button className="btn-add">Adicionar</button>
-          <button className="btn-delete">
+          <button
+            className="btn-delete"
+            onClick={() => handleDelete(selectedUsers)}
+            disabled={selectedUsers.length === 0}
+          >
             <FaTrashAlt size={16} style={{ marginRight: 8 }} />
           </button>
         </div>
-        {/* Aplicar funcionalidade de filtro por tipo de usuário e Turma */}
       </div>
 
       <ul className="users-list">
         {Array.isArray(users) && users.length > 0 ? (
-          users.map((user) => (
-            <li className="user-item" key={user.userId}>
+          <>
+            <li className="user-bar">
               <div className="user-info-container">
-
                 <div className="user-info-page">
-                  <input type="checkbox" className="user-checkbox" />
-                  <h5 className="user-name">{user.userName}</h5>
+                  <input
+                    className="user-checkbox"
+                    type="checkbox"
+                    checked={selectAll}
+                    onChange={handleSelectAll}
+                  />
+                  <h5 className="user-bar-name">Selecionar Todos</h5>
                 </div>
-
-                <div className="user-details">
-                  <div className="user-contact">
-                    <p className="user-email">{user.email}</p>
-                    <p className="user-phone">{user.phone}</p>
-                  </div>
-
-                  <button
-                    className="btn-edit"
-                    onClick={() => handleUpdate(user)}
-                  >
-                    <FaEdit size={16} style={{ marginRight: 8 }} />
-                  </button>
-                </div>
-
               </div>
             </li>
-          ))
+            {users.map((user) => (
+              <li className="user-item" key={user.userId}>
+                <div className="user-info-container">
+                  <div className="user-info-page">
+                    <input
+                      type="checkbox"
+                      checked={selectedUsers.includes(user.userId)}
+                      onChange={() => handleSelectUser(user.userId)}
+                      className="user-checkbox"
+                    />
+                    <h5 className="user-name">{user.userName}</h5>
+                  </div>
+
+                  <div className="user-details">
+                    <div className="user-contact">
+                      <p className="user-detail-contact">{user.role}</p>
+                      <p className="user-detail-contact">{user.email}</p>
+                      <p className="user-detail-contact">{user.phone}</p>
+                    </div>
+
+                    {user.role === "STUDENT" && (
+                      <button className="concept-btn" onClick={() => handleNavigateToConcepts(user.userId)}>
+                        Conceitos
+                      </button>)}
+
+                    <button
+                      className="btn-edit"
+                      onClick={() => handleUpdate(user)}
+                    >
+                      <FaEdit size={16} style={{ marginRight: 8 }} />
+                    </button>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </>
         ) : (
           <p>Carregando usuários ou nenhum usuário encontrado.</p>
         )}
       </ul>
-
 
       <div className="pagination">
         <button className="pagination-btn">←</button>
