@@ -4,13 +4,15 @@ import ClassesSection from '../components/ClassesSection';
 
 
 const ClassesPage = () => {
-    
+
 
     return (
         <div>
             <NavBar />
             <br />
-            <ClassesSection />
+            <div className='container'>
+                <ClassesSection />
+            </div>
         </div>
     );
 };

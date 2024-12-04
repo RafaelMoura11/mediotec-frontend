@@ -107,7 +107,7 @@ export default function UsersSection() {
       <ul className="users-list">
         {Array.isArray(users) && users.length > 0 ? (
           <>
-            <li className="user-bar">
+            <li className="user-item">
               <div className="user-info-container">
                 <div className="user-info-page">
                   <input
@@ -116,7 +116,7 @@ export default function UsersSection() {
                     checked={selectAll}
                     onChange={handleSelectAll}
                   />
-                  <h5 className="user-bar-name">Selecionar Todos</h5>
+                  <h5 className="user-name">Selecionar Todos</h5>
                 </div>
               </div>
             </li>
@@ -139,11 +139,6 @@ export default function UsersSection() {
                       <p className="user-detail-contact">{user.email}</p>
                       <p className="user-detail-contact">{user.phone}</p>
                     </div>
-
-                    {user.role === "STUDENT" && (
-                      <button className="concept-btn" onClick={() => handleNavigateToConcepts(user.userId)}>
-                        Conceitos
-                      </button>)}
 
                     <button
                       className="btn-edit"

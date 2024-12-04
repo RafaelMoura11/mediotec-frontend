@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import { useAppContext } from "../context/AppContext";
 import classesFunctions from "../utils/classesFunctions";
 import NewClass from "./modals/NewClass";
@@ -8,8 +9,8 @@ import NewClass from "./modals/NewClass";
 export default function ClassesSection() {
   const [classes, setClasses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-//   const [classToUpdate, setClassToUpdate] = useState(null);
+  //   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  //   const [classToUpdate, setClassToUpdate] = useState(null);
   const navigate = useNavigate();
   const { user } = useAppContext();
 
@@ -18,10 +19,10 @@ export default function ClassesSection() {
     setClasses(data);
   };
 
-//   const handleUpdate = (classItem) => {
-//     setClassToUpdate(classItem);
-//     setIsUpdateModalOpen(true);
-//   };
+  //   const handleUpdate = (classItem) => {
+  //     setClassToUpdate(classItem);
+  //     setIsUpdateModalOpen(true);
+  //   };
 
   const handleDelete = async (classId) => {
     try {
@@ -47,30 +48,69 @@ export default function ClassesSection() {
     setIsModalOpen(false);
   };
 
-//   const handleUpdateModalClose = () => {
-//     setIsUpdateModalOpen(false);
-//     setClassToUpdate(null);
-//   };
+  //   const handleUpdateModalClose = () => {
+  //     setIsUpdateModalOpen(false);
+  //     setClassToUpdate(null);
+  //   };
 
   return (
     <div>
-      <h3>Gerenciamento de Turmas</h3>
-      <button onClick={handleModalOpen}>Adicionar</button>
-      <ul>
-        {classes.map((classItem) => (
-          <li key={classItem.classId}>
-            <h5>{classItem.className}</h5>
-            <p>{classItem.year}</p>
-            <div>
-              {/* <button onClick={() => handleUpdate(classItem)}>Atualizar</button> */}
-              <button onClick={() => handleDelete(classItem.classId)}>Deletar</button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <h1 className="title">Gerenciamento de Turmas</h1>
 
-      <NewClass open={isModalOpen} handleClose={handleModalClose} getAllClasses={getAllClasses} />
-      {/* <UpdateClass open={isUpdateModalOpen} handleClose={handleUpdateModalClose} classToUpdate={classToUpdate} getAllClasses={getAllClasses} /> */}
+
+
+      <div className="search-filters">
+        <div>
+          <input type="text" placeholder="Procurar" className="search-input" />
+          <select className="filter-select">
+            <option value="">Filtro</option>
+            {/* Adicionar funcionalidade */}
+          </select>
+        </div>
+
+        <div className="action-buttons">
+          <button className="btn-add" onClick={handleModalOpen}>
+            Adicionar
+          </button>
+        </div>
+      </div>
+
+      <div className="classes-grid">
+        {classes.map((classItem) => (
+          <div className="class-card" key={classItem.classId}>
+            <div className="class-card-header">
+              <h5 className="class-title">{classItem.className}</h5>
+              <p className="class-year">{classItem.year}</p>
+            </div>
+            <div className="class-card-footer">
+              <button
+                className="btn-edit-classes"
+                onClick={() => console.log("Editar turma", classItem.classId)}
+              >
+                <FaEdit />
+              </button>
+              <button
+                className="btn-delete-classes"
+                onClick={() => handleDelete(classItem.classId)}
+              >
+                <FaTrashAlt />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="pagination">
+        <button className="pagination-btn">←</button>
+        <span className="pagination-page">1</span>
+        <button className="pagination-btn">→</button>
+      </div>
+
+      <NewClass
+        open={isModalOpen}
+        handleClose={handleModalClose}
+        getAllClasses={getAllClasses}
+      />
     </div>
   );
 }

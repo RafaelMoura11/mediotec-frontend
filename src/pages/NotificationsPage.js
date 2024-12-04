@@ -4,13 +4,15 @@ import NotificationsSection from '../components/NotificationsSection';
 
 
 const NotificationsPage = () => {
-    
+
 
     return (
         <div>
             <NavBar />
             <br />
-            <NotificationsSection />
+            <div className='container'>
+                <NotificationsSection />
+            </div>
         </div>
     );
 };

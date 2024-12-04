@@ -4,13 +4,15 @@ import UsersSection from '../components/UsersSection';
 
 
 const UsersPage = () => {
-    
+
 
     return (
         <div>
             <NavBar />
             <br />
-            <UsersSection />
+            <div className='container'>
+                <UsersSection />
+            </div>
         </div>
     );
 };

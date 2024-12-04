@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { FaSignOutAlt } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import profilePic from '../images/profile.png';
 import logo from '../images/logo-mediotec.png';
@@ -78,7 +79,11 @@ export default function NavBar() {
                             <small className="tipo-usuario">{user.role}</small>
                         </div>
                     </div>
-                    <button onClick={ logout }>Logout</button>
+                    <FaSignOutAlt
+                        onClick={logout}
+                        size={24} // Tamanho do ícone
+                        className="ms-3 logout-icon"
+                    />
                 </div>
             </nav>
         </div>
