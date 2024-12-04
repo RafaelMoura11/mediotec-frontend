@@ -86,110 +86,116 @@ const UpdateUser = ({ open, handleClose, userToUpdate, getAllUsers }) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           bgcolor: "white",
-          p: 4,
+          p: 0,
           borderRadius: 2,
           boxShadow: 24,
-          width: "400px",
+          width: { xs: "90%", sm: "500px" }, // 90% em telas pequenas
+          maxHeight: "90vh",
+          overflowY: "auto",
         }}
       >
-        <Typography variant="h6" sx={{ mb: 2, bgcolor: "purple", color: "white", p: 1, borderRadius: 1 }}>
+        <Typography variant="h6" sx={{ mb: 2, bgcolor: "#7326BF", color: "white", p: 3 }}>
           Atualizar Usuário
         </Typography>
-        <TextField
-          label="Nome"
-          name="userName"
-          fullWidth
-          margin="normal"
-          value={formData.userName}
-          onChange={handleChange}
-        />
-        <TextField
-          label="Email"
-          name="email"
-          fullWidth
-          margin="normal"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <TextField
-          label="Papel"
-          name="role"
-          select
-          fullWidth
-          margin="normal"
-          value={formData.role}
-          onChange={handleChange}
-        >
-          <MenuItem value="STUDENT">Estudante</MenuItem>
-          <MenuItem value="TEACHER">Professor</MenuItem>
-          <MenuItem value="COORDINATOR">Coordenador</MenuItem>
-        </TextField>
-        <TextField
-          label="CPF"
-          name="cpf"
-          fullWidth
-          margin="normal"
-          value={formData.cpf}
-          onChange={handleChange}
-        />
-        <TextField
-          label="Telefone"
-          name="phone"
-          fullWidth
-          margin="normal"
-          value={formData.phone}
-          onChange={handleChange}
-        />
-        <TextField
-          label="Data de Nascimento"
-          name="dateOfBirth"
-          type="date"
-          fullWidth
-          margin="normal"
-          value={formData.dateOfBirth}
-          onChange={handleChange}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        <TextField
-          label="Imagem"
-          name="image"
-          fullWidth
-          margin="normal"
-          value={formData.image}
-          onChange={handleChange}
-        />
-        <TextField
-          label="Contato da Família"
-          name="familyContact"
-          fullWidth
-          margin="normal"
-          value={formData.familyContact}
-          onChange={handleChange}
-        />
-        <TextField
-          label="Afiliação"
-          name="affiliation"
-          fullWidth
-          margin="normal"
-          value={formData.affiliation}
-          onChange={handleChange}
-        />
-        <TextField
-          label="Gênero"
-          name="gender"
-          select
-          fullWidth
-          margin="normal"
-          value={formData.gender}
-          onChange={handleChange}
-        >
-          <MenuItem value="MALE">Masculino</MenuItem>
-          <MenuItem value="FEMALE">Feminino</MenuItem>
-          <MenuItem value="OTHERS">Outros</MenuItem>
-        </TextField>
-        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, mt: 2 }}>
+
+        <div className="imput-modal">
+          <TextField
+            label="Nome"
+            name="userName"
+            fullWidth
+            margin="normal"
+            value={formData.userName}
+            onChange={handleChange}
+          />
+          <TextField
+            label="Email"
+            name="email"
+            fullWidth
+            margin="normal"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <TextField
+            label="Papel"
+            name="role"
+            select
+            fullWidth
+            margin="normal"
+            value={formData.role}
+            onChange={handleChange}
+          >
+            <MenuItem value="STUDENT">Estudante</MenuItem>
+            <MenuItem value="TEACHER">Professor</MenuItem>
+            <MenuItem value="COORDINATOR">Coordenador</MenuItem>
+          </TextField>
+          <TextField
+            label="CPF"
+            name="cpf"
+            fullWidth
+            margin="normal"
+            value={formData.cpf}
+            onChange={handleChange}
+          />
+          <TextField
+            label="Telefone"
+            name="phone"
+            fullWidth
+            margin="normal"
+            value={formData.phone}
+            onChange={handleChange}
+          />
+          <TextField
+            label="Data de Nascimento"
+            name="dateOfBirth"
+            type="date"
+            fullWidth
+            margin="normal"
+            value={formData.dateOfBirth}
+            onChange={handleChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            label="Imagem"
+            name="image"
+            fullWidth
+            margin="normal"
+            value={formData.image}
+            onChange={handleChange}
+          />
+          <TextField
+            label="Contato da Família"
+            name="familyContact"
+            fullWidth
+            margin="normal"
+            value={formData.familyContact}
+            onChange={handleChange}
+          />
+          <TextField
+            label="Afiliação"
+            name="affiliation"
+            fullWidth
+            margin="normal"
+            value={formData.affiliation}
+            onChange={handleChange}
+          />
+          <TextField
+            label="Gênero"
+            name="gender"
+            select
+            fullWidth
+            margin="normal"
+            value={formData.gender}
+            onChange={handleChange}
+          >
+            <MenuItem value="MALE">Masculino</MenuItem>
+            <MenuItem value="FEMALE">Feminino</MenuItem>
+            <MenuItem value="OTHERS">Outros</MenuItem>
+          </TextField>
+        </div>
+
+        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, p: 2 }}>
           <Button variant="outlined" color="secondary" onClick={() => {
             clearForm();
             handleClose();

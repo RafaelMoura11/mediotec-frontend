@@ -7,11 +7,13 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  bgcolor: "white",
+  p: 0,
+  borderRadius: 2,
   boxShadow: 24,
-  p: 4,
+  width: { xs: "90%", sm: "500px" }, // 90% em telas pequenas
+  maxHeight: "90vh",
+  overflowY: "auto",
 };
 
 // Todas as unidades definidas no Enum UnidadeEnum
@@ -63,49 +65,55 @@ export default function ViewConceptModal({ open, handleClose, selectedDiscipline
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={style}>
-        <Typography variant="h6" component="h2" gutterBottom>
+        <Typography variant="h6" component="h2" gutterBottom sx={{ mb: 2, bgcolor: "#7326BF", color: "white", p: 3 }}>
           Conceitos - {selectedDiscipline?.courseName}
         </Typography>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Unidade</TableCell>
-                <TableCell>Conceito</TableCell>
-                <TableCell>Atualizar Conceito</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {allConcepts.map((concept) => (
-                <TableRow key={concept.conceitoId}>
-                  <TableCell>{concept.unidade}</TableCell>
-                  <TableCell>{concept.conceito}</TableCell>
-                  <TableCell>
-                    <Select
-                      value={updatedConcepts[concept.conceitoId] || concept.conceito}
-                      onChange={(e) => handleConceptChange(concept.conceitoId, e.target.value)}
-                      fullWidth
-                    >
-                      <MenuItem value="E">Excelente</MenuItem>
-                      <MenuItem value="B">Bom</MenuItem>
-                      <MenuItem value="R">Regular</MenuItem>
-                      <MenuItem value="I">Insuficiente</MenuItem>
-                      <MenuItem value="N/A" disabled>
-                        Não Disponível
-                      </MenuItem>
-                    </Select>
-                  </TableCell>
+
+        <div className="imput-modal">
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Unidade</TableCell>
+                  <TableCell>Conceito</TableCell>
+                  <TableCell>Atualizar Conceito</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Button variant="contained" color="primary" onClick={handleSave} style={{ marginTop: "16px" }}>
-          Salvar
-        </Button>
-        <Button variant="outlined" color="secondary" onClick={handleClose} style={{ marginTop: "16px", marginLeft: "8px" }}>
-          Cancelar
-        </Button>
+              </TableHead>
+              <TableBody>
+                {allConcepts.map((concept) => (
+                  <TableRow key={concept.conceitoId}>
+                    <TableCell>{concept.unidade}</TableCell>
+                    <TableCell>{concept.conceito}</TableCell>
+                    <TableCell>
+                      <Select
+                        value={updatedConcepts[concept.conceitoId] || concept.conceito}
+                        onChange={(e) => handleConceptChange(concept.conceitoId, e.target.value)}
+                        fullWidth
+                      >
+                        <MenuItem value="E">Excelente</MenuItem>
+                        <MenuItem value="B">Bom</MenuItem>
+                        <MenuItem value="R">Regular</MenuItem>
+                        <MenuItem value="I">Insuficiente</MenuItem>
+                        <MenuItem value="N/A" disabled>
+                          Não Disponível
+                        </MenuItem>
+                      </Select>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+        
+        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, p: 2 }}>
+          <Button variant="outlined" color="secondary" onClick={handleClose}>
+            Cancelar
+          </Button>
+          <Button variant="contained" color="primary" onClick={handleSave}>
+            Salvar
+          </Button>
+        </Box>
       </Box>
     </Modal>
   );
