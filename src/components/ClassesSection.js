@@ -4,13 +4,10 @@ import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import { useAppContext } from "../context/AppContext";
 import classesFunctions from "../utils/classesFunctions";
 import NewClass from "./modals/NewClass";
-// import UpdateClass from "./modals/UpdateClass";
 
 export default function ClassesSection() {
   const [classes, setClasses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  //   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  //   const [classToUpdate, setClassToUpdate] = useState(null);
   const navigate = useNavigate();
   const { user } = useAppContext();
 
@@ -18,11 +15,6 @@ export default function ClassesSection() {
     const data = await classesFunctions.getAllClasses();
     setClasses(data);
   };
-
-  //   const handleUpdate = (classItem) => {
-  //     setClassToUpdate(classItem);
-  //     setIsUpdateModalOpen(true);
-  //   };
 
   const handleDelete = async (classId) => {
     try {
@@ -48,10 +40,9 @@ export default function ClassesSection() {
     setIsModalOpen(false);
   };
 
-  //   const handleUpdateModalClose = () => {
-  //     setIsUpdateModalOpen(false);
-  //     setClassToUpdate(null);
-  //   };
+  // Define as permissões baseadas no papel do usuário
+  const isCoordinator = user.role === "COORDINATOR";
+  const canRead = user.role === "TEACHER" || user.role === "STUDENT";
 
   return (
     <div>
@@ -62,15 +53,16 @@ export default function ClassesSection() {
           <input type="text" placeholder="Procurar" className="search-input" />
           <select className="filter-select">
             <option value="">Filtro</option>
-            {/* Adicionar funcionalidade */}
           </select>
         </div>
 
-        <div className="action-buttons">
-          <button className="btn-add" onClick={handleModalOpen}>
-            Adicionar
-          </button>
-        </div>
+        {isCoordinator && (
+          <div className="action-buttons">
+            <button className="btn-add" onClick={handleModalOpen}>
+              Adicionar
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="classes-grid">
@@ -81,18 +73,22 @@ export default function ClassesSection() {
               <p className="class-year">{classItem.year}</p>
             </div>
             <div className="class-card-footer">
-              <button
-                className="btn-edit-classes"
-                onClick={() => console.log("Editar turma", classItem.classId)}
-              >
-                <FaEdit />
-              </button>
-              <button
-                className="btn-delete-classes"
-                onClick={() => handleDelete(classItem.classId)}
-              >
-                <FaTrashAlt />
-              </button>
+              {isCoordinator && (
+                <>
+                  <button
+                    className="btn-edit-classes"
+                    onClick={() => console.log("Editar turma", classItem.classId)}
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    className="btn-delete-classes"
+                    onClick={() => handleDelete(classItem.classId)}
+                  >
+                    <FaTrashAlt />
+                  </button>
+                </>
+              )}
             </div>
           </div>
         ))}
@@ -104,11 +100,13 @@ export default function ClassesSection() {
         <button className="pagination-btn">→</button>
       </div>
 
-      <NewClass
-        open={isModalOpen}
-        handleClose={handleModalClose}
-        getAllClasses={getAllClasses}
-      />
+      {isCoordinator && (
+        <NewClass
+          open={isModalOpen}
+          handleClose={handleModalClose}
+          getAllClasses={getAllClasses}
+        />
+      )}
     </div>
   );
 }

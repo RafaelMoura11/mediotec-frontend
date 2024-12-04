@@ -54,6 +54,10 @@ export default function CoursesSection() {
     setCourseToUpdate(null);
   };
 
+  // Define as permissões baseadas no papel do usuário
+  const isCoordinator = user.role === "COORDINATOR";
+  const canRead = user.role === "TEACHER" || user.role === "STUDENT";
+
   return (
     <div>
       <h3 className="title">Gerenciamento de Disciplinas</h3>
@@ -63,18 +67,19 @@ export default function CoursesSection() {
           <input type="text" placeholder="Procurar" className="search-input" />
           <select className="filter-select">
             <option value="">Filtro</option>
-            {/* Adicionar funcionalidade */}
           </select>
         </div>
 
-        <div className="action-buttons">
-          <button className="btn-add" onClick={handleModalOpen}>
-            Adicionar
-          </button>
-          <button className="btn-delete">
-            <FaTrashAlt size={16} style={{ marginRight: 8 }} />
-          </button>
-        </div>
+        {isCoordinator && (
+          <div className="action-buttons">
+            <button className="btn-add" onClick={handleModalOpen}>
+              Adicionar
+            </button>
+            <button className="btn-delete">
+              <FaTrashAlt size={16} style={{ marginRight: 8 }} />
+            </button>
+          </div>
+        )}
       </div>
 
       <ul className="courses-list">
@@ -82,19 +87,20 @@ export default function CoursesSection() {
           <li className="course-item" key={course.id}>
             <div className="course-info-container">
               <div className="course-info">
-                <input type="checkbox" className="course-checkbox" />
+                {isCoordinator && (
+                  <input type="checkbox" className="course-checkbox" />
+                )}
                 <div className="course-details">
                   <h5 className="course-name">{course.courseName} | Turma 1A24</h5>
                   <p className="course-workload">Carga Horária: {course.workload}</p>
                 </div>
               </div>
 
-              <button
-                className="btn-edit"
-                onClick={() => handleUpdate(course)}
-              >
-                <FaEdit size={16} style={{ marginRight: 8 }} />
-              </button>
+              {isCoordinator && (
+                <button className="btn-edit" onClick={() => handleUpdate(course)}>
+                  <FaEdit size={16} style={{ marginRight: 8 }} />
+                </button>
+              )}
             </div>
           </li>
         ))}
@@ -104,17 +110,21 @@ export default function CoursesSection() {
         <span className="pagination-page">1</span>
         <button className="pagination-btn">→</button>
       </div>
-      <NewCourse
-        open={isModalOpen}
-        handleClose={handleModalClose}
-        getAllCourses={getAllCourses}
-      />
-      <UpdateCourse
-        open={isUpdateModalOpen}
-        handleClose={handleUpdateModalClose}
-        courseToUpdate={courseToUpdate}
-        getAllCourses={getAllCourses}
-      />
+      {isCoordinator && (
+        <NewCourse
+          open={isModalOpen}
+          handleClose={handleModalClose}
+          getAllCourses={getAllCourses}
+        />
+      )}
+      {isCoordinator && (
+        <UpdateCourse
+          open={isUpdateModalOpen}
+          handleClose={handleUpdateModalClose}
+          courseToUpdate={courseToUpdate}
+          getAllCourses={getAllCourses}
+        />
+      )}
     </div>
   );
 }

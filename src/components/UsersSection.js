@@ -16,6 +16,7 @@ export default function UsersSection() {
 
   const getAllUsers = async () => {
     const data = await usersFunctions.getAllUsers(user.token);
+    console.log(user);
     setUsers(data);
     setSelectedUsers([]);
     setSelectAll(false);
@@ -71,6 +72,11 @@ export default function UsersSection() {
     setUserToUpdate(null);
   };
 
+  // Define as permissões baseadas no papel do usuário
+  const isCoordinator = user.role === "COORDINATOR";
+  const isTeacher = user.role === "TEACHER";
+  const isStudent = user.role === "STUDENT";
+
   return (
     <div>
       <h3 className="title">Gerenciamento de Usuários</h3>
@@ -92,44 +98,50 @@ export default function UsersSection() {
           </select>
         </div>
 
-        <div className="action-buttons">
-          <button className="btn-add">Adicionar</button>
-          <button
-            className="btn-delete"
-            onClick={() => handleDelete(selectedUsers)}
-            disabled={selectedUsers.length === 0}
-          >
-            <FaTrashAlt size={16} style={{ marginRight: 8 }} />
-          </button>
-        </div>
+        {isCoordinator && (
+          <div className="action-buttons">
+            <button className="btn-add">Adicionar</button>
+            <button
+              className="btn-delete"
+              onClick={() => handleDelete(selectedUsers)}
+              disabled={selectedUsers.length === 0}
+            >
+              <FaTrashAlt size={16} style={{ marginRight: 8 }} />
+            </button>
+          </div>
+        )}
       </div>
 
       <ul className="users-list">
         {Array.isArray(users) && users.length > 0 ? (
           <>
-            <li className="user-bar">
-              <div className="user-info-container">
-                <div className="user-info-page">
-                  <input
-                    className="user-checkbox"
-                    type="checkbox"
-                    checked={selectAll}
-                    onChange={handleSelectAll}
-                  />
-                  <h5 className="user-bar-name">Selecionar Todos</h5>
+            {isCoordinator && (
+              <li className="user-bar">
+                <div className="user-info-container">
+                  <div className="user-info-page">
+                    <input
+                      className="user-checkbox"
+                      type="checkbox"
+                      checked={selectAll}
+                      onChange={handleSelectAll}
+                    />
+                    <h5 className="user-bar-name">Selecionar Todos</h5>
+                  </div>
                 </div>
-              </div>
-            </li>
+              </li>
+            )}
             {users.map((user) => (
               <li className="user-item" key={user.userId}>
                 <div className="user-info-container">
                   <div className="user-info-page">
-                    <input
-                      type="checkbox"
-                      checked={selectedUsers.includes(user.userId)}
-                      onChange={() => handleSelectUser(user.userId)}
-                      className="user-checkbox"
-                    />
+                    {isCoordinator && (
+                      <input
+                        type="checkbox"
+                        checked={selectedUsers.includes(user.userId)}
+                        onChange={() => handleSelectUser(user.userId)}
+                        className="user-checkbox"
+                      />
+                    )}
                     <h5 className="user-name">{user.userName}</h5>
                   </div>
 
@@ -140,17 +152,33 @@ export default function UsersSection() {
                       <p className="user-detail-contact">{user.phone}</p>
                     </div>
 
-                    {user.role === "STUDENT" && (
-                      <button className="concept-btn" onClick={() => handleNavigateToConcepts(user.userId)}>
+                    {/* Botão "Conceitos" disponível apenas para professores */}
+                    {isTeacher && user.role === "STUDENT" && (
+                      <button
+                        className="concept-btn"
+                        onClick={() => handleNavigateToConcepts(user.userId)}
+                      >
                         Conceitos
-                      </button>)}
+                      </button>
+                    )}
 
-                    <button
-                      className="btn-edit"
-                      onClick={() => handleUpdate(user)}
-                    >
-                      <FaEdit size={16} style={{ marginRight: 8 }} />
-                    </button>
+                    {/* Botões de editar e excluir disponíveis apenas para coordenadores */}
+                    {isCoordinator && (
+                      <>
+                        <button
+                          className="btn-edit"
+                          onClick={() => handleUpdate(user)}
+                        >
+                          <FaEdit size={16} style={{ marginRight: 8 }} />
+                        </button>
+                        <button
+                          className="btn-delete"
+                          onClick={() => handleDelete([user.userId])}
+                        >
+                          <FaTrashAlt size={16} />
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </li>
