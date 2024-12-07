@@ -87,7 +87,7 @@ const LoginSection = () => {
             fullWidth
             sx={{
               "& .MuiSelect-select": {
-                padding: "10px", 
+                padding: "10px",
                 bgcolor: 'white'
               },
             }}
@@ -151,6 +151,21 @@ const LoginSection = () => {
           Entrar
         </Button>
       </Box>
+
+      <div style={{ marginTop: "20px", textAlign: "center" }}>
+        <button
+          onClick={() => navigate("/registro")}
+          style={{
+            backgroundColor: "#9747FF",
+            color: "#ffffff",
+            border: "none",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          Não tem uma conta? Cadastre-se
+        </button>
+      </div>
 
       {/* Snackbar para erros */}
       <Snackbar

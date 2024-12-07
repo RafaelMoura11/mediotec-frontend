@@ -10,14 +10,18 @@ import {
   IconButton,
   Snackbar,
   Alert,
+  Grid,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import PhoneIcon from "@mui/icons-material/Phone";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import loginFunctions from "../utils/loginFunctions";
+import { useNavigate } from "react-router-dom";
 
 const RegisterSection = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     userName: "",
     cpf: "",
@@ -50,25 +54,26 @@ const RegisterSection = () => {
 
   const formatDateOfBirth = (date) => {
     const formattedDate = new Date(date);
-    return formattedDate.toISOString(); // Retorna a data no formato ISO 8601
+    return formattedDate.toISOString();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Formatar dateOfBirth para DATETIME
-    const formattedData = { ...formData, dateOfBirth: formatDateOfBirth(formData.dateOfBirth) };
+    const formattedData = {
+      ...formData,
+      dateOfBirth: formatDateOfBirth(formData.dateOfBirth),
+    };
 
     try {
       const response = await loginFunctions.register(formattedData);
-      console.log(response); // Certifique-se de ver o que a função retorna no console
+      console.log(response);
     } catch (error) {
       console.log(error);
       setErrorMessage("Erro ao registrar usuário.");
       setSnackbarOpen(true);
     }
   };
-  
 
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
@@ -81,9 +86,11 @@ const RegisterSection = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh",
-        bgcolor: "purple",
-        padding: 2,
+        height: "100%",
+        bgcolor: "#9747ff",
+        margin: 0,
+        paddingTop: "70px",
+        paddingBottom: "75px"
       }}
     >
       <Box
@@ -91,147 +98,170 @@ const RegisterSection = () => {
         onSubmit={handleSubmit}
         sx={{
           width: "100%",
-          maxWidth: "500px",
+          maxWidth: "60%",
           bgcolor: "white",
           borderRadius: "12px",
           p: 4,
           boxShadow: 3,
           textAlign: "center",
+          margin: "60px",
         }}
       >
-        <Typography variant="h4" sx={{ mb: 4, color: "purple", fontWeight: "bold" }}>
+        <Typography variant="h4" sx={{ mb: 4, color: "#9747ff", fontWeight: "bold" }}>
           Registro de Usuário
         </Typography>
 
-        <TextField
-          label="Nome Completo"
-          name="userName"
-          value={formData.userName}
-          onChange={handleChange}
-          fullWidth
-          sx={{ mb: 2 }}
-        />
+        <Grid container spacing={2}>
+          {/* Nome Completo */}
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Nome Completo"
+              name="userName"
+              value={formData.userName}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid>
 
-        <TextField
-          label="CPF"
-          name="cpf"
-          value={formData.cpf}
-          onChange={handleChange}
-          fullWidth
-          sx={{ mb: 2 }}
-        />
+          {/* CPF */}
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="CPF"
+              name="cpf"
+              value={formData.cpf}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid>
 
-        <TextField
-          label="Email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          type="email"
-          fullWidth
-          sx={{ mb: 2 }}
-        />
+          {/* Email */}
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              type="email"
+              fullWidth
+            />
+          </Grid>
 
-        <TextField
-          label="Senha"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          type={showPassword ? "text" : "password"}
-          fullWidth
-          sx={{ mb: 2 }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={handleTogglePasswordVisibility}>
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-        {/* Telefone */}
-        <TextField
-          label="Telefone"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          fullWidth
-          sx={{ mb: 2 }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <PhoneIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-        {/* Data de Nascimento */}
-        <TextField
-          label="Data de Nascimento"
-          name="dateOfBirth"
-          value={formData.dateOfBirth}
-          onChange={handleChange}
-          type="date"
-          fullWidth
-          sx={{ mb: 2 }}
-          InputLabelProps={{ shrink: true }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <CalendarTodayIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
+          {/* Senha */}
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Senha"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              type={showPassword ? "text" : "password"}
+              fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleTogglePasswordVisibility}>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
 
-        <Select
-          name="role"
-          value={formData.role}
-          onChange={handleChange}
-          fullWidth
-          sx={{ mb: 2 }}
-        >
-          <MenuItem value="STUDENT">Aluno</MenuItem>
-          <MenuItem value="TEACHER">Professor</MenuItem>
-          <MenuItem value="COORDINATOR">Coordenador</MenuItem>
-        </Select>
+          {/* Telefone */}
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Telefone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PhoneIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
 
-        <Select
-          name="gender"
-          value={formData.gender}
-          onChange={handleChange}
-          fullWidth
-          sx={{ mb: 2 }}
-        >
-          <MenuItem value="MALE">Masculino</MenuItem>
-          <MenuItem value="FEMALE">Feminino</MenuItem>
-          <MenuItem value="OTHER">Outro</MenuItem>
-        </Select>
+          {/* Data de Nascimento */}
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Data de Nascimento"
+              name="dateOfBirth"
+              value={formData.dateOfBirth}
+              onChange={handleChange}
+              type="date"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <CalendarTodayIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
 
-        <TextField
-          label="Contato Familiar"
-          name="familyContact"
-          value={formData.familyContact}
-          onChange={handleChange}
-          fullWidth
-          sx={{ mb: 2 }}
-        />
+          {/* Role */}
+          <Grid item xs={12} md={6}>
+            <Select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              fullWidth
+            >
+              <MenuItem value="STUDENT">Aluno</MenuItem>
+              <MenuItem value="TEACHER">Professor</MenuItem>
+              <MenuItem value="COORDINATOR">Coordenador</MenuItem>
+            </Select>
+          </Grid>
 
-        <TextField
-          label="Afiliação"
-          name="affiliation"
-          value={formData.affiliation}
-          onChange={handleChange}
-          fullWidth
-          sx={{ mb: 2 }}
-        />
+          {/* Gender */}
+          <Grid item xs={12} md={6}>
+            <Select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              fullWidth
+            >
+              <MenuItem value="MALE">Masculino</MenuItem>
+              <MenuItem value="FEMALE">Feminino</MenuItem>
+              <MenuItem value="OTHER">Outro</MenuItem>
+            </Select>
+          </Grid>
+
+          {/* Contato Familiar */}
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Contato Familiar"
+              name="familyContact"
+              value={formData.familyContact}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid>
+
+          {/* Afiliação */}
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Afiliação"
+              name="affiliation"
+              value={formData.affiliation}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid>
+        </Grid>
 
         <Button
           variant="outlined"
           component="label"
           fullWidth
           startIcon={<UploadFileIcon />}
-          sx={{ mb: 3 }}
+          sx={{ mt: 3, mb: 3 }}
         >
           Upload de Foto
           <input
@@ -249,17 +279,33 @@ const RegisterSection = () => {
           sx={{
             width: "100%",
             padding: "10px",
-            bgcolor: "purple",
+            bgcolor: "#9747ff",
             color: "white",
             fontWeight: "bold",
             borderRadius: "20px",
             "&:hover": {
-              bgcolor: "darkviolet",
+              bgcolor: "#9747ff",
             },
           }}
         >
           Registrar
         </Button>
+
+        <div style={{ marginTop: "20px", textAlign: "center" }}>
+          <button
+            onClick={() => navigate("/login")}
+            style={{
+              backgroundColor: "#ffffff",
+              color: "#9747ff",
+              border: "none",
+              padding: "10px 20px",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            Já tem uma conta? Faça login
+          </button>
+        </div>
       </Box>
 
       <Snackbar

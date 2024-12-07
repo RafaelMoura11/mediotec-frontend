@@ -64,23 +64,25 @@ code {
 /*                        PAGES                       */
 
 /*-------------------- Login Page --------------------*/
-
-.login-page-main {
-  height: 100%;
-  margin: 0;
-  background-color: #9747ff;
-}
-
-.img-fluid {
-  max-width: 100%;
-}
-
 .login-page {
   display: flex;
 }
 
+.login-page-main {
+  height: 100vh;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  background-color: #9747ff;
+}
 .image-section {
+  flex: 1;
+  max-height: 100%;
+}
+img.img-fluid {
   max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
 }
 
 /*-------------------- Home Page --------------------*/
@@ -550,8 +552,7 @@ h3 {
 }
 /*-------------------- Modals --------------------*/
 
-
-.imput-modal{
+.imput-modal {
   margin: 15px;
 }
 
@@ -641,7 +642,7 @@ h3 {
 .concept-btn {
   color: #ffffff;
   background-color: #9747ff;
-  border:  1px solid #9747ff;
+  border: 1px solid #9747ff;
   border-radius: 4px;
   padding: 2px;
 }
